@@ -24,7 +24,7 @@ const WordRelay = () => {
                 input.focus();
             }
         }
-    }, [value]);
+    }, [word, value]);
 
     const onChangeInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
@@ -41,7 +41,6 @@ const WordRelay = () => {
                 />
                 <button>입력!</button>
             </form>
-            <div>{word[word.length - 1]} {value[0]}</div>
             <div>{result}</div>
         </>
     );
