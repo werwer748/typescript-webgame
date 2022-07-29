@@ -4,14 +4,14 @@ import { useState, useRef, useCallback } from 'react';
 const ResponseCheck = () => {
     const [state, setState] = useState('waiting');
     const [message, setMessage] = useState('클릭해서 시작하세요');
-    const [result, setResult] = useState<number[]>([]);
+    const [result, setResult] = useState<number[]>([]); //? 빈배열은 never가 되기때문에 항상 제네릭을 활용한다.
     const timeout = useRef<number | null>(null); //? ref는 재 렌더링을 하지 않기위해 사용한다
     const startTime = useRef(0);
     const endTime = useRef(0);
 
     const onClickScreen = useCallback(() => {
         if (state === 'waiting') {
-            timeout.current = window.setTimeout(() => { // nodejs setTimeout으로 인식해서 오류가 난다.
+            timeout.current = window.setTimeout(() => { //? nodejs setTimeout으로 인식해서 오류가 난다.
                 setState('now');
                 setMessage('지금 클릭');
                 startTime.current = new Date().getTime();
@@ -50,6 +50,7 @@ const ResponseCheck = () => {
             id="screen"
             className={state}
             onClick={onClickScreen}
+            style={{ width: '500px', height: '500px', backgroundColor: `${state === "now" ? "green" : state === "ready" ? "red" : state === "waiting" ? "blue" : ""}` }}
             >
                 {message}
             </div>
